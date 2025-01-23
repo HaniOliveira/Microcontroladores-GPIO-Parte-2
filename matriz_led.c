@@ -21,6 +21,13 @@
 
 // Espaço para desenho do frame
 
+// Botão #
+double desenho_hashtag[25] = {0.2, 0.2, 0.2, 0.2, 0.2,
+                              0.2, 0.2, 0.2, 0.2, 0.2,
+                              0.2, 0.2, 0.2, 0.2, 0.2,
+                              0.2, 0.2, 0.2, 0.2, 0.2,
+                              0.2, 0.2, 0.2, 0.2, 0.2};
+
 // Letra A
 double desenho_a[25] = {0.0, 0.0, 0.0, 0.0, 0.0,
                         0.0, 0.0, 0.0, 0.0, 0.0,
@@ -76,6 +83,20 @@ uint32_t matrix_rgb(double b, double r, double g)
 }
 
 // rotina para acionar a matrix de leds e fazer as animações
+
+// Desenho #
+void desenho_pio_hashtag(double *desenho_hashtag, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
+{
+
+    for (int16_t i = 0; i < NUM_PIXELS; i++)
+    {
+
+        valor_led = matrix_rgb(desenho_hashtag[24 - i], desenho_hashtag[24 - i], desenho_hashtag[24 - i]);
+        pio_sm_put_blocking(pio, sm, valor_led);
+    }
+
+    imprimir_binario(valor_led);
+}
 
 // Desenho A
 void desenho_pio_a(double *desenho_a, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
@@ -262,6 +283,7 @@ int main()
                 break;
 
             case '#':
+                desenho_pio_hashtag(desenho_b, valor_led, pio, sm, r, g, b);
 
                 break;
 
