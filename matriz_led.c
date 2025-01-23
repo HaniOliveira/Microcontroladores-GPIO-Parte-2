@@ -20,11 +20,32 @@
 #define BUZZER 21
 
 // Espaço para desenho do frame
-double desenho[25] = {1.0, 1.0, 1.0, 1.0, 1.0,
-                      1.0, 1.0, 1.0, 1.0, 1.0,
-                      1.0, 1.0, 1.0, 1.0, 1.0,
-                      1.0, 1.0, 1.0, 1.0, 1.0,
-                      1.0, 1.0, 1.0, 1.0, 1.0};
+
+// Letra A
+double desenho_a[25] = {0.0, 0.0, 0.0, 0.0, 0.0,
+                        0.0, 0.0, 0.0, 0.0, 0.0,
+                        0.0, 0.0, 0.0, 0.0, 0.0,
+                        0.0, 0.0, 0.0, 0.0, 0.0,
+                        0.0, 0.0, 0.0, 0.0, 0.0};
+
+// Letra B
+double desenho_b[25] = {1.0, 1.0, 1.0, 1.0, 1.0,
+                        1.0, 1.0, 1.0, 1.0, 1.0,
+                        1.0, 1.0, 1.0, 1.0, 1.0,
+                        1.0, 1.0, 1.0, 1.0, 1.0,
+                        1.0, 1.0, 1.0, 1.0, 1.0};
+// Letra C
+double desenho_c[25] = {0.8, 0.8, 0.8, 0.8, 0.8,
+                        0.8, 0.8, 0.8, 0.8, 0.8,
+                        0.8, 0.8, 0.8, 0.8, 0.8,
+                        0.8, 0.8, 0.8, 0.8, 0.8,
+                        0.8, 0.8, 0.8, 0.8, 0.8};
+// Letra D
+double desenho_d[25] = {0.5, 0.5, 0.5, 0.5, 0.5,
+                        0.5, 0.5, 0.5, 0.5, 0.5,
+                        0.5, 0.5, 0.5, 0.5, 0.5,
+                        0.5, 0.5, 0.5, 0.5, 0.5,
+                        0.5, 0.5, 0.5, 0.5, 0.5};
 
 // imprimir valor binário
 void imprimir_binario(int num)
@@ -54,14 +75,56 @@ uint32_t matrix_rgb(double b, double r, double g)
     return (G << 24) | (R << 16) | (B << 8);
 }
 
-// rotina para acionar a matrix de leds - ws2812b
-void desenho_pio(double *desenho, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
+// rotina para acionar a matrix de leds e fazer as animações
+
+// Desenho A
+void desenho_pio_a(double *desenho_a, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
 {
 
     for (int16_t i = 0; i < NUM_PIXELS; i++)
     {
 
-        valor_led = matrix_rgb(b = 0.0, desenho[24 - i], g = 0.0);
+        valor_led = matrix_rgb(b = 0.0, r = 0.0, g = 0.0);
+        pio_sm_put_blocking(pio, sm, valor_led);
+    }
+
+    imprimir_binario(valor_led);
+}
+
+// Desenho B
+void desenho_pio_b(double *desenho_b, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
+{
+
+    for (int16_t i = 0; i < NUM_PIXELS; i++)
+    {
+
+        valor_led = matrix_rgb(desenho_b[24 - i], r = 0.0, g = 0.0);
+        pio_sm_put_blocking(pio, sm, valor_led);
+    }
+
+    imprimir_binario(valor_led);
+}
+// Desenho C
+void desenho_pio_c(double *desenho_c, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
+{
+
+    for (int16_t i = 0; i < NUM_PIXELS; i++)
+    {
+
+        valor_led = matrix_rgb(b = 0.0, desenho_c[24 - i], g = 0.0);
+        pio_sm_put_blocking(pio, sm, valor_led);
+    }
+
+    imprimir_binario(valor_led);
+}
+// Desenho D
+void desenho_pio_d(double *desenho_d, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
+{
+
+    for (int16_t i = 0; i < NUM_PIXELS; i++)
+    {
+
+        valor_led = matrix_rgb(b = 0.0, r = 0.0, desenho_d[24 - i]);
         pio_sm_put_blocking(pio, sm, valor_led);
     }
 
@@ -163,7 +226,7 @@ int main()
             switch (key)
             {
             case '1':
-                desenho_pio(desenho, valor_led, pio, sm, r, g, b);
+
                 break;
 
             case '2':
@@ -207,19 +270,19 @@ int main()
                 break;
 
             case 'A':
-
+                desenho_pio_a(desenho_a, valor_led, pio, sm, r, g, b);
                 break;
 
             case 'B':
-
+                desenho_pio_b(desenho_b, valor_led, pio, sm, r, g, b);
                 break;
 
             case 'C':
-
+                desenho_pio_c(desenho_c, valor_led, pio, sm, r, g, b);
                 break;
 
             case 'D':
-
+                desenho_pio_d(desenho_b, valor_led, pio, sm, r, g, b);
                 break;
 
             // Adicione mais casos para outras teclas se necessário
