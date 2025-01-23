@@ -21,6 +21,28 @@
 
 // Espaço para desenho do frame
 
+
+double desenho_foguete[25] = {
+    0.0, 0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 1.0, 0.0, 0.0,
+    0.0, 1.0, 1.0, 1.0, 0.0,
+    0.0, 0.0, 1.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0, 0.0
+};
+
+
+// Desenho da Estrela
+double desenho_estrela[25] = {
+    0.0, 0.0, 1.0, 0.0, 0.0,
+    0.0, 1.0, 0.0, 1.0, 0.0,
+    1.0, 0.0, 1.0, 0.0, 1.0,
+    0.0, 1.0, 0.0, 1.0, 0.0,
+    0.0, 0.0, 1.0, 0.0, 0.0
+};
+
+
+
+
 // Botão #
 double desenho_hashtag[25] = {0.2, 0.2, 0.2, 0.2, 0.2,
                               0.2, 0.2, 0.2, 0.2, 0.2,
@@ -152,6 +174,37 @@ void desenho_pio_d(double *desenho_d, uint32_t valor_led, PIO pio, uint sm, doub
     imprimir_binario(valor_led);
 }
 
+
+void desenho_pio_foguete(double *desenho_foguete, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
+{
+    for (int16_t i = 0; i < NUM_PIXELS; i++)
+    {
+        // Desenho do foguete com cores verde e azul
+        valor_led = matrix_rgb(desenho_foguete[24 - i], g = 1.0, b = 1.0);  // Verde e Azul
+        pio_sm_put_blocking(pio, sm, valor_led);
+    }
+
+    imprimir_binario(valor_led);
+
+
+}
+
+// Desenho da Estrela com a cor azul
+void desenho_pio_estrela(double *desenho_estrela, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
+{
+    for (int16_t i = 0; i < NUM_PIXELS; i++)
+    {
+        // Desenha a estrela com a cor azul
+        valor_led = matrix_rgb(desenho_estrela[24 - i], 0.0, 0.0);  // Cor azul (r=0, g=0, b=1)
+        pio_sm_put_blocking(pio, sm, valor_led);
+    }
+
+    imprimir_binario(valor_led);
+}
+
+
+
+
 uint8_t columns[4] = {1, 2, 3, 4};
 uint8_t rows[4] = {5, 6, 7, 8};
 
@@ -247,11 +300,11 @@ int main()
             switch (key)
             {
             case '1':
-
+                    desenho_pio_foguete(desenho_foguete, valor_led, pio, sm, r, g, b);
                 break;
 
             case '2':
-
+                     desenho_pio_estrela(desenho_estrela, valor_led, pio, sm, r, g, b);
                 break;
 
             case '3':
