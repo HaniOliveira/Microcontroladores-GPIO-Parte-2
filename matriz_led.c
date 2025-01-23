@@ -19,12 +19,13 @@
 
 #define BUZZER 21
 
-// vetor para criar imagem na matriz de led - 1
+// Espaço para desenho do frame
 double desenho[25] = {1.0, 1.0, 1.0, 1.0, 1.0,
                       1.0, 1.0, 1.0, 1.0, 1.0,
                       1.0, 1.0, 1.0, 1.0, 1.0,
                       1.0, 1.0, 1.0, 1.0, 1.0,
                       1.0, 1.0, 1.0, 1.0, 1.0};
+
 // imprimir valor binário
 void imprimir_binario(int num)
 {
@@ -112,7 +113,7 @@ char get_key()
     return '\0';
 }
 
-/*Função que configura uma frequência (Tom) e uma duração em milissegundos para o toque do buzzer*/
+/*Função para usar o buzzer*/
 void play_tone(uint16_t frequencia, uint16_t duracao)
 {
 
@@ -198,6 +199,26 @@ int main()
                 break;
 
             case '#':
+
+                break;
+
+            case '*':
+
+                break;
+
+            case 'A':
+
+                break;
+
+            case 'B':
+
+                break;
+
+            case 'C':
+
+                break;
+
+            case 'D':
 
                 break;
 
