@@ -44,6 +44,43 @@ double desenho_estrela[5][NUM_PIXELS] = {
     
 };
 
+double desenho_olho[5][NUM_PIXELS] = {
+    // Frame 1: Olho Totalmente Aberto
+    {0.0, 0.5, 1.0, 0.5, 0.0,
+     0.5, 1.0, 1.0, 1.0, 0.5,
+     1.0, 1.0, 0.0, 1.0, 1.0,
+     0.5, 1.0, 1.0, 1.0, 0.5,
+     0.0, 0.5, 1.0, 0.5, 0.0},
+
+    // Frame 2: Olho Começando a Fechar
+    {0.0, 0.0, 1.0, 0.0, 0.0,
+     0.5, 1.0, 1.0, 1.0, 0.5,
+     1.0, 1.0, 1.0, 1.0, 1.0,
+     0.5, 1.0, 1.0, 1.0, 0.5,
+     0.0, 0.5, 0.5, 0.5, 0.0},
+
+    // Frame 3: Olho Meio Fechado
+    {0.0, 0.0, 0.0, 0.0, 0.0,
+     0.0, 1.0, 1.0, 1.0, 0.0,
+     1.0, 1.0, 1.0, 1.0, 1.0,
+     0.0, 1.0, 1.0, 1.0, 0.0,
+     0.0, 0.0, 0.5, 0.0, 0.0},
+
+    // Frame 4: Olho Quase Fechado
+    {0.0, 0.0, 0.0, 0.0, 0.0,
+     0.0, 0.0, 0.0, 0.0, 0.0,
+     1.0, 1.0, 1.0, 1.0, 1.0,
+     0.0, 0.0, 0.0, 0.0, 0.0,
+     0.0, 0.0, 0.0, 0.0, 0.0},
+
+    // Frame 5: Olho Totalmente Fechado
+    {0.0, 0.0, 0.0, 0.0, 0.0,
+     0.0, 0.0, 0.0, 0.0, 0.0,
+     0.5, 0.5, 0.5, 0.5, 0.5,
+     0.0, 0.0, 0.0, 0.0, 0.0,
+     0.0, 0.0, 0.0, 0.0, 0.0}
+};
+
 
 
 
@@ -133,6 +170,17 @@ void desenho_pio_foguete(double desenho_foguete[5][NUM_PIXELS], uint32_t valor_l
         sleep_ms(500);  // Pausa para criar o efeito de animação
     }
 }
+
+void desenho_pio_olho(double desenho_olho[5][NUM_PIXELS], uint32_t valor_led, PIO pio, uint sm, double r, double g, double b) {
+    for (int frame = 0; frame < 5; frame++) { // Itera pelos 5 frames
+        for (int i = 0; i < NUM_PIXELS; i++) {
+            valor_led = matrix_rgb(desenho_olho[frame][i], r, g, b);  // Define a cor do LED
+            pio_sm_put_blocking(pio, sm, valor_led);
+        }
+        sleep_ms(200);  // Pausa para criar o efeito de animação
+    }
+}
+
 
 
 
@@ -271,7 +319,7 @@ int main()
                 break;
 
             case '5':
-
+                 desenho_pio_olho(desenho_olho, valor_led, pio, sm, 0.0, 0.0, 1.0);  // Cor azul para o olho
                 break;
 
             case '6':
