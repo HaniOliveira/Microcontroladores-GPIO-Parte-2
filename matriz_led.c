@@ -349,6 +349,18 @@ int main()
 
             case '3':
 
+                     desenho_pio_coluna1(desenho_coluna1, valor_led, pio, sm, r, g, b);
+                     sleep_ms(200);
+                     desenho_pio_coluna2(desenho_coluna2, valor_led, pio, sm, r, g, b);
+                     sleep_ms(200);
+                     desenho_pio_coluna3(desenho_coluna3, valor_led, pio, sm, r, g, b);
+                     sleep_ms(200);
+                     desenho_pio_coluna4(desenho_coluna4, valor_led, pio, sm, r, g, b);
+                     sleep_ms(200);
+                     desenho_pio_coluna5(desenho_coluna5, valor_led, pio, sm, r, g, b);
+                     sleep_ms(200);
+                     desenho_pio(desenho_a, valor_led, pio, sm, 0.0, 0.0, 0.0);
+
                 break;
 
             case '4':
