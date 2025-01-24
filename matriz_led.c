@@ -22,22 +22,26 @@
 // Espaço para desenho do frame
 
 
-double desenho_foguete[25] = {
-    0.0, 0.0, 0.0, 0.0, 0.0,
-    0.0, 0.0, 1.0, 0.0, 0.0,
-    0.0, 1.0, 1.0, 1.0, 0.0,
-    0.0, 0.0, 1.0, 0.0, 0.0,
-    0.0, 0.0, 0.0, 0.0, 0.0
+double desenho_foguete[5][NUM_PIXELS] = {
+    {0.0, 0.0, 0.0, 0.0, 0.0,
+     0.0, 0.0, 1.0, 0.0, 0.0,
+     0.0, 1.0, 1.0, 1.0, 0.0,
+     0.0, 0.0, 1.0, 0.0, 0.0,
+     0.0, 0.0, 0.0, 0.0, 0.0},
+
+   
 };
 
 
 // Desenho da Estrela
-double desenho_estrela[25] = {
-    0.0, 0.0, 1.0, 0.0, 0.0,
-    0.0, 1.0, 0.0, 1.0, 0.0,
-    1.0, 0.0, 1.0, 0.0, 1.0,
-    0.0, 1.0, 0.0, 1.0, 0.0,
-    0.0, 0.0, 1.0, 0.0, 0.0
+double desenho_estrela[5][NUM_PIXELS] = {
+    {0.0, 0.0, 1.0, 0.0, 0.0,
+     0.0, 1.0, 0.0, 1.0, 0.0,
+     1.0, 0.0, 1.0, 0.0, 1.0,
+     0.0, 1.0, 0.0, 1.0, 0.0,
+     0.0, 0.0, 1.0, 0.0, 0.0},
+
+    
 };
 
 
@@ -76,38 +80,6 @@ double desenho_d[25] = {0.5, 0.5, 0.5, 0.5, 0.5,
                         0.5, 0.5, 0.5, 0.5, 0.5,
                         0.5, 0.5, 0.5, 0.5, 0.5};
 
-// Coluna 1 acessa
-double desenho_coluna1[25] = {0.2, 0.0, 0.0, 0.0, 0.0,
-                        0.0, 0.0, 0.0, 0.0, 0.2,
-                        0.2, 0.0, 0.0, 0.0, 0.0,
-                        0.0, 0.0, 0.0, 0.0, 0.2,
-                        0.2, 0.0, 0.0, 0.0, 0.0};
-// Coluna 2 acessa
-double desenho_coluna2[25] = {0.0, 0.4, 0.0, 0.0, 0.0,
-                        0.0, 0.0, 0.0, 0.4, 0.0,
-                        0.0, 0.4, 0.0, 0.0, 0.0,
-                        0.0, 0.0, 0.0, 0.4, 0.0,
-                        0.0, 0.4, 0.0, 0.0, 0.0};
-// Coluna 3 acessa
-double desenho_coluna3[25] = {0.0, 0.0, 0.6, 0.0, 0.0,
-                        0.0, 0.0, 0.6, 0.0, 0.0,
-                        0.0, 0.0, 0.6, 0.0, 0.0,
-                        0.0, 0.0, 0.6, 0.0, 0.0,
-                        0.0, 0.0, 0.6, 0.0, 0.0};
-// Coluna 4 acessa
-double desenho_coluna4[25] = {0.0, 0.0, 0.0, 0.8, 0.0,
-                        0.0, 0.8, 0.0, 0.0, 0.0,
-                        0.0, 0.0, 0.0, 0.8, 0.0,
-                        0.0, 0.8, 0.0, 0.0, 0.0,
-                        0.0, 0.0, 0.0, 0.8, 0.0};
-// Coluna 5 acessa
-double desenho_coluna5[25] = {0.0, 0.0, 0.0, 0.0, 1.0,
-                        1.0, 0.0, 0.0, 0.0, 0.0,
-                        0.0, 0.0, 0.0, 0.0, 1.0,
-                        1.0, 0.0, 0.0, 0.0, 0.0,
-                       0.0, 0.0, 0.0, 0.0, 1.0};
-                    
-
 // imprimir valor binário
 void imprimir_binario(int num)
 {
@@ -138,81 +110,13 @@ uint32_t matrix_rgb(double b, double r, double g)
 
 // rotina para acionar a matrix de leds e fazer as animações
 
-// Desenho #
-void desenho_pio_hashtag(double *desenho_hashtag, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
+void desenho_pio(double *desenho, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
 {
 
     for (int16_t i = 0; i < NUM_PIXELS; i++)
     {
 
-        valor_led = matrix_rgb(desenho_hashtag[24 - i], desenho_hashtag[24 - i], desenho_hashtag[24 - i]);
-        pio_sm_put_blocking(pio, sm, valor_led);
-    }
-
-    imprimir_binario(valor_led);
-}
-
-// Desenho A
-void desenho_pio_a(double *desenho_a, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
-{
-
-    for (int16_t i = 0; i < NUM_PIXELS; i++)
-    {
-
-        valor_led = matrix_rgb(b = 0.0, r = 0.0, g = 0.0);
-        pio_sm_put_blocking(pio, sm, valor_led);
-    }
-
-    imprimir_binario(valor_led);
-}
-
-// Desenho B
-void desenho_pio_b(double *desenho_b, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
-{
-
-    for (int16_t i = 0; i < NUM_PIXELS; i++)
-    {
-
-        valor_led = matrix_rgb(desenho_b[24 - i], r = 0.0, g = 0.0);
-        pio_sm_put_blocking(pio, sm, valor_led);
-    }
-
-    imprimir_binario(valor_led);
-}
-// Desenho C
-void desenho_pio_c(double *desenho_c, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
-{
-
-    for (int16_t i = 0; i < NUM_PIXELS; i++)
-    {
-
-        valor_led = matrix_rgb(b = 0.0, desenho_c[24 - i], g = 0.0);
-        pio_sm_put_blocking(pio, sm, valor_led);
-    }
-
-    imprimir_binario(valor_led);
-}
-// Desenho D
-void desenho_pio_d(double *desenho_d, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
-{
-
-    for (int16_t i = 0; i < NUM_PIXELS; i++)
-    {
-
-        valor_led = matrix_rgb(b = 0.0, r = 0.0, desenho_d[24 - i]);
-        pio_sm_put_blocking(pio, sm, valor_led);
-    }
-
-    imprimir_binario(valor_led);
-}
-
-// Desenho coluna 1
-void desenho_pio_coluna1(double *desenho_coluna1, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
-{
-    for (int16_t i = 0; i < NUM_PIXELS; i++)
-    {
-        
-        valor_led = matrix_rgb(0.0, desenho_coluna1[24 - i], 0.0);  // Cor vermelho (r=0, g=1, b=0)
+        valor_led = matrix_rgb((b > 0.0 ? desenho[24 - i] : 0.0), (r > 0.0 ? desenho[24 - i] : 0.0), (g > 0.0 ? desenho[24 - i] : 0.0));
         pio_sm_put_blocking(pio, sm, valor_led);
     }
 
@@ -220,86 +124,40 @@ void desenho_pio_coluna1(double *desenho_coluna1, uint32_t valor_led, PIO pio, u
 }
 
 
-// Desenho coluna 2
-void desenho_pio_coluna2(double *desenho_coluna2, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
-{
-    for (int16_t i = 0; i < NUM_PIXELS; i++)
-    {
-        valor_led = matrix_rgb(0.0, desenho_coluna2[24 - i], 0.0);  // Cor vermelho (r=0, g=1, b=0)
-        pio_sm_put_blocking(pio, sm, valor_led);
+void desenho_pio_foguete(double desenho_foguete[5][NUM_PIXELS], uint32_t valor_led, PIO pio, uint sm, double r, double g, double b) {
+    for (int frame = 0; frame < 5; frame++) {
+        for (int i = 0; i < NUM_PIXELS; i++) {
+            valor_led = matrix_rgb(desenho_foguete[frame][i], r, g);  // Atualiza a cor conforme o quadro
+            pio_sm_put_blocking(pio, sm, valor_led);
+        }
+        sleep_ms(500);  // Pausa para criar o efeito de animação
     }
-
-    imprimir_binario(valor_led);
 }
 
 
-// Desenho coluna 3
-void desenho_pio_coluna3(double *desenho_coluna3, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
-{
-    for (int16_t i = 0; i < NUM_PIXELS; i++)
-    {
-        valor_led = matrix_rgb(0.0, desenho_coluna3[24 - i], 0.0);  // Cor vermelho (r=0, g=1, b=0)
-        pio_sm_put_blocking(pio, sm, valor_led);
-    }
-
-    imprimir_binario(valor_led);
-}
 
 
-// Desenho coluna 4
-void desenho_pio_coluna4(double *desenho_coluna4, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
-{
-    for (int16_t i = 0; i < NUM_PIXELS; i++)
-    {
-        valor_led = matrix_rgb(0.0, desenho_coluna4[24 - i], 0.0);  // Cor vermelho (r=0, g=1, b=0)
-        pio_sm_put_blocking(pio, sm, valor_led);
-    }
-
-    imprimir_binario(valor_led);
-}
-
-
-// Desenho coluna 5
-void desenho_pio_coluna5(double *desenho_coluna5, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
-{
-    for (int16_t i = 0; i < NUM_PIXELS; i++)
-    {
-        valor_led = matrix_rgb(0.0, desenho_coluna5[24 - i], 0.0);  // Cor vermelho (r=0, g=1, b=0)
-        pio_sm_put_blocking(pio, sm, valor_led);
-    }
-
-    imprimir_binario(valor_led);
-}
-
-
-void desenho_pio_foguete(double *desenho_foguete, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
-{
-    for (int16_t i = 0; i < NUM_PIXELS; i++)
-    {
-        // Desenho do foguete com cores verde e azul
-        valor_led = matrix_rgb(desenho_foguete[24 - i], g = 1.0, b = 1.0);  // Verde e Azul
-        pio_sm_put_blocking(pio, sm, valor_led);
-    }
-
-    imprimir_binario(valor_led);
-
-
-}
 
 // Desenho da Estrela com a cor azul
-void desenho_pio_estrela(double *desenho_estrela, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
-{
-    for (int16_t i = 0; i < NUM_PIXELS; i++)
-    {
-        // Desenha a estrela com a cor azul
-        valor_led = matrix_rgb(desenho_estrela[24 - i], 0.0, 0.0);  // Cor azul (r=0, g=0, b=1)
-        pio_sm_put_blocking(pio, sm, valor_led);
+// void desenho_pio_foguete(double desenho_foguete[5][NUM_PIXELS], uint32_t valor_led, PIO pio, uint sm, double r, double g, double b) {
+//     for (int frame = 0; frame < 5; frame++) {
+//         for (int i = 0; i < NUM_PIXELS; i++) {
+//             valor_led = matrix_rgb(desenho_foguete[frame][i], r, g);  // Atualiza a cor conforme o quadro
+//             pio_sm_put_blocking(pio, sm, valor_led);
+//         }
+//         sleep_ms(200);  // Pausa para criar o efeito de animação
+//     }
+// }
+
+void desenho_pio_estrela(double desenho_estrela[5][NUM_PIXELS], uint32_t valor_led, PIO pio, uint sm, double r, double g, double b) {
+    for (int frame = 0; frame < 5; frame++) {
+        for (int i = 0; i < NUM_PIXELS; i++) {
+            valor_led = matrix_rgb(desenho_estrela[frame][i], r, g);  // Atualiza a cor conforme o quadro
+            pio_sm_put_blocking(pio, sm, valor_led);
+        }
+        sleep_ms(200);  // Pausa para criar o efeito de animação
     }
-
-    imprimir_binario(valor_led);
 }
-
-
 
 
 uint8_t columns[4] = {1, 2, 3, 4};
@@ -405,15 +263,7 @@ int main()
                 break;
 
             case '3':
-                     desenho_pio_coluna1(desenho_coluna1, valor_led, pio, sm, r, g, b);
-                     sleep_ms(200);
-                     desenho_pio_coluna2(desenho_coluna2, valor_led, pio, sm, r, g, b);
-                     sleep_ms(200);
-                     desenho_pio_coluna3(desenho_coluna3, valor_led, pio, sm, r, g, b);
-                     sleep_ms(200);
-                     desenho_pio_coluna4(desenho_coluna4, valor_led, pio, sm, r, g, b);
-                     sleep_ms(200);
-                     desenho_pio_coluna5(desenho_coluna5, valor_led, pio, sm, r, g, b);
+
                 break;
 
             case '4':
@@ -441,7 +291,7 @@ int main()
                 break;
 
             case '#':
-                desenho_pio_hashtag(desenho_b, valor_led, pio, sm, r, g, b);
+                desenho_pio(desenho_hashtag, valor_led, pio, sm, 1.0, 1.0, 1.0);
 
                 break;
 
@@ -450,19 +300,19 @@ int main()
                 break;
 
             case 'A':
-                desenho_pio_a(desenho_a, valor_led, pio, sm, r, g, b);
+                desenho_pio(desenho_a, valor_led, pio, sm, 0.0, 0.0, 0.0);
                 break;
 
             case 'B':
-                desenho_pio_b(desenho_b, valor_led, pio, sm, r, g, b);
+                desenho_pio(desenho_b, valor_led, pio, sm, 0.0, 0.0, 1.0);
                 break;
 
             case 'C':
-                desenho_pio_c(desenho_c, valor_led, pio, sm, r, g, b);
+                desenho_pio(desenho_c, valor_led, pio, sm, 0.8, 0.0, 0.0);
                 break;
 
             case 'D':
-                desenho_pio_d(desenho_b, valor_led, pio, sm, r, g, b);
+                desenho_pio(desenho_d, valor_led, pio, sm, 0.0, 0.5, 0.0);
                 break;
 
             // Adicione mais casos para outras teclas se necessário
