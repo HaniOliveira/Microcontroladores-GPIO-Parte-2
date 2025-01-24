@@ -22,22 +22,26 @@
 // Espaço para desenho do frame
 
 
-double desenho_foguete[25] = {
-    0.0, 0.0, 0.0, 0.0, 0.0,
-    0.0, 0.0, 1.0, 0.0, 0.0,
-    0.0, 1.0, 1.0, 1.0, 0.0,
-    0.0, 0.0, 1.0, 0.0, 0.0,
-    0.0, 0.0, 0.0, 0.0, 0.0
+double desenho_foguete[5][NUM_PIXELS] = {
+    {0.0, 0.0, 0.0, 0.0, 0.0,
+     0.0, 0.0, 1.0, 0.0, 0.0,
+     0.0, 1.0, 1.0, 1.0, 0.0,
+     0.0, 0.0, 1.0, 0.0, 0.0,
+     0.0, 0.0, 0.0, 0.0, 0.0},
+
+   
 };
 
 
 // Desenho da Estrela
-double desenho_estrela[25] = {
-    0.0, 0.0, 1.0, 0.0, 0.0,
-    0.0, 1.0, 0.0, 1.0, 0.0,
-    1.0, 0.0, 1.0, 0.0, 1.0,
-    0.0, 1.0, 0.0, 1.0, 0.0,
-    0.0, 0.0, 1.0, 0.0, 0.0
+double desenho_estrela[5][NUM_PIXELS] = {
+    {0.0, 0.0, 1.0, 0.0, 0.0,
+     0.0, 1.0, 0.0, 1.0, 0.0,
+     1.0, 0.0, 1.0, 0.0, 1.0,
+     0.0, 1.0, 0.0, 1.0, 0.0,
+     0.0, 0.0, 1.0, 0.0, 0.0},
+
+    
 };
 
 
@@ -175,34 +179,40 @@ void desenho_pio_d(double *desenho_d, uint32_t valor_led, PIO pio, uint sm, doub
 }
 
 
-void desenho_pio_foguete(double *desenho_foguete, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
-{
-    for (int16_t i = 0; i < NUM_PIXELS; i++)
-    {
-        // Desenho do foguete com cores verde e azul
-        valor_led = matrix_rgb(desenho_foguete[24 - i], g = 1.0, b = 1.0);  // Verde e Azul
-        pio_sm_put_blocking(pio, sm, valor_led);
+void desenho_pio_foguete(double desenho_foguete[5][NUM_PIXELS], uint32_t valor_led, PIO pio, uint sm, double r, double g, double b) {
+    for (int frame = 0; frame < 5; frame++) {
+        for (int i = 0; i < NUM_PIXELS; i++) {
+            valor_led = matrix_rgb(desenho_foguete[frame][i], r, g);  // Atualiza a cor conforme o quadro
+            pio_sm_put_blocking(pio, sm, valor_led);
+        }
+        sleep_ms(500);  // Pausa para criar o efeito de animação
     }
-
-    imprimir_binario(valor_led);
-
-
 }
+
+
+
+
 
 // Desenho da Estrela com a cor azul
-void desenho_pio_estrela(double *desenho_estrela, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
-{
-    for (int16_t i = 0; i < NUM_PIXELS; i++)
-    {
-        // Desenha a estrela com a cor azul
-        valor_led = matrix_rgb(desenho_estrela[24 - i], 0.0, 0.0);  // Cor azul (r=0, g=0, b=1)
-        pio_sm_put_blocking(pio, sm, valor_led);
+// void desenho_pio_foguete(double desenho_foguete[5][NUM_PIXELS], uint32_t valor_led, PIO pio, uint sm, double r, double g, double b) {
+//     for (int frame = 0; frame < 5; frame++) {
+//         for (int i = 0; i < NUM_PIXELS; i++) {
+//             valor_led = matrix_rgb(desenho_foguete[frame][i], r, g);  // Atualiza a cor conforme o quadro
+//             pio_sm_put_blocking(pio, sm, valor_led);
+//         }
+//         sleep_ms(200);  // Pausa para criar o efeito de animação
+//     }
+// }
+
+void desenho_pio_estrela(double desenho_estrela[5][NUM_PIXELS], uint32_t valor_led, PIO pio, uint sm, double r, double g, double b) {
+    for (int frame = 0; frame < 5; frame++) {
+        for (int i = 0; i < NUM_PIXELS; i++) {
+            valor_led = matrix_rgb(desenho_estrela[frame][i], r, g);  // Atualiza a cor conforme o quadro
+            pio_sm_put_blocking(pio, sm, valor_led);
+        }
+        sleep_ms(200);  // Pausa para criar o efeito de animação
     }
-
-    imprimir_binario(valor_led);
 }
-
-
 
 
 uint8_t columns[4] = {1, 2, 3, 4};
