@@ -32,7 +32,6 @@ double desenho_foguete[5][NUM_PIXELS] = {
    
 };
 
-
 // Desenho da Estrela
 double desenho_estrela[5][NUM_PIXELS] = {
     {0.0, 0.0, 1.0, 0.0, 0.0,
@@ -43,9 +42,6 @@ double desenho_estrela[5][NUM_PIXELS] = {
 
     
 };
-
-
-
 
 // Botão #
 double desenho_hashtag[25] = {0.2, 0.2, 0.2, 0.2, 0.2,
@@ -79,6 +75,38 @@ double desenho_d[25] = {0.5, 0.5, 0.5, 0.5, 0.5,
                         0.5, 0.5, 0.5, 0.5, 0.5,
                         0.5, 0.5, 0.5, 0.5, 0.5,
                         0.5, 0.5, 0.5, 0.5, 0.5};
+
+// Coluna 1 acessa
+double desenho_coluna1[25] = {0.2, 0.0, 0.0, 0.0, 0.0,
+                        0.0, 0.0, 0.0, 0.0, 0.2,
+                        0.2, 0.0, 0.0, 0.0, 0.0,
+                        0.0, 0.0, 0.0, 0.0, 0.2,
+                        0.2, 0.0, 0.0, 0.0, 0.0};
+// Coluna 2 acessa
+double desenho_coluna2[25] = {0.0, 0.4, 0.0, 0.0, 0.0,
+                        0.0, 0.0, 0.0, 0.4, 0.0,
+                        0.0, 0.4, 0.0, 0.0, 0.0,
+                        0.0, 0.0, 0.0, 0.4, 0.0,
+                        0.0, 0.4, 0.0, 0.0, 0.0};
+// Coluna 3 acessa
+double desenho_coluna3[25] = {0.0, 0.0, 0.6, 0.0, 0.0,
+                        0.0, 0.0, 0.6, 0.0, 0.0,
+                        0.0, 0.0, 0.6, 0.0, 0.0,
+                        0.0, 0.0, 0.6, 0.0, 0.0,
+                        0.0, 0.0, 0.6, 0.0, 0.0};
+// Coluna 4 acessa
+double desenho_coluna4[25] = {0.0, 0.0, 0.0, 0.8, 0.0,
+                        0.0, 0.8, 0.0, 0.0, 0.0,
+                        0.0, 0.0, 0.0, 0.8, 0.0,
+                        0.0, 0.8, 0.0, 0.0, 0.0,
+                        0.0, 0.0, 0.0, 0.8, 0.0};
+// Coluna 5 acessa
+double desenho_coluna5[25] = {0.0, 0.0, 0.0, 0.0, 1.0,
+                        1.0, 0.0, 0.0, 0.0, 0.0,
+                        0.0, 0.0, 0.0, 0.0, 1.0,
+                        1.0, 0.0, 0.0, 0.0, 0.0,
+                       0.0, 0.0, 0.0, 0.0, 1.0};
+
 
 // imprimir valor binário
 void imprimir_binario(int num)
@@ -134,9 +162,66 @@ void desenho_pio_foguete(double desenho_foguete[5][NUM_PIXELS], uint32_t valor_l
     }
 }
 
+// Desenho coluna 1
+void desenho_pio_coluna1(double *desenho_coluna1, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
+{
+    for (int16_t i = 0; i < NUM_PIXELS; i++)
+    {
+        
+        valor_led = matrix_rgb(0.0, desenho_coluna1[24 - i], 0.0);  // Cor vermelho (r=0, g=1, b=0)
+        pio_sm_put_blocking(pio, sm, valor_led);
+    }
 
+    imprimir_binario(valor_led);
+}
 
+// Desenho coluna 2
+void desenho_pio_coluna2(double *desenho_coluna2, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
+{
+    for (int16_t i = 0; i < NUM_PIXELS; i++)
+    {
+        valor_led = matrix_rgb(0.0, desenho_coluna2[24 - i], 0.0);  // Cor vermelho (r=0, g=1, b=0)
+        pio_sm_put_blocking(pio, sm, valor_led);
+    }
 
+    imprimir_binario(valor_led);
+}
+
+// Desenho coluna 3
+void desenho_pio_coluna3(double *desenho_coluna3, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
+{
+    for (int16_t i = 0; i < NUM_PIXELS; i++)
+    {
+        valor_led = matrix_rgb(0.0, desenho_coluna3[24 - i], 0.0);  // Cor vermelho (r=0, g=1, b=0)
+        pio_sm_put_blocking(pio, sm, valor_led);
+    }
+
+    imprimir_binario(valor_led);
+}
+
+// Desenho coluna 4
+void desenho_pio_coluna4(double *desenho_coluna4, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
+{
+    for (int16_t i = 0; i < NUM_PIXELS; i++)
+    {
+        valor_led = matrix_rgb(0.0, desenho_coluna4[24 - i], 0.0);  // Cor vermelho (r=0, g=1, b=0)
+        pio_sm_put_blocking(pio, sm, valor_led);
+    }
+
+    imprimir_binario(valor_led);
+}
+
+// Desenho coluna 5
+void desenho_pio_coluna5(double *desenho_coluna5, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b)
+{
+    for (int16_t i = 0; i < NUM_PIXELS; i++)
+    {
+        valor_led = matrix_rgb(0.0, desenho_coluna5[24 - i], 0.0);  // Cor vermelho (r=0, g=1, b=0)
+        pio_sm_put_blocking(pio, sm, valor_led);
+    }
+
+    imprimir_binario(valor_led);
+}
 
 // Desenho da Estrela com a cor azul
 // void desenho_pio_foguete(double desenho_foguete[5][NUM_PIXELS], uint32_t valor_led, PIO pio, uint sm, double r, double g, double b) {
@@ -263,6 +348,18 @@ int main()
                 break;
 
             case '3':
+
+                     desenho_pio_coluna1(desenho_coluna1, valor_led, pio, sm, r, g, b);
+                     sleep_ms(200);
+                     desenho_pio_coluna2(desenho_coluna2, valor_led, pio, sm, r, g, b);
+                     sleep_ms(200);
+                     desenho_pio_coluna3(desenho_coluna3, valor_led, pio, sm, r, g, b);
+                     sleep_ms(200);
+                     desenho_pio_coluna4(desenho_coluna4, valor_led, pio, sm, r, g, b);
+                     sleep_ms(200);
+                     desenho_pio_coluna5(desenho_coluna5, valor_led, pio, sm, r, g, b);
+                     sleep_ms(200);
+                     desenho_pio(desenho_a, valor_led, pio, sm, 0.0, 0.0, 0.0);
 
                 break;
 
