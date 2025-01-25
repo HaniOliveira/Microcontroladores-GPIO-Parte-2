@@ -19,7 +19,43 @@
 
 #define BUZZER 21
 
+// Prototipagem da função play_tone
+void play_tone(uint16_t frequencia, uint16_t duracao);
+
 // Espaço para desenho do frame
+
+// Desenho da explosão - wellington
+double desenho_explosao[5][NUM_PIXELS] = {
+    {0.0, 0.0, 0.0, 0.0, 0.0,
+     0.0, 0.0, 1.0, 0.0, 0.0,
+     0.0, 0.0, 1.0, 0.0, 0.0,
+     0.0, 0.0, 1.0, 0.0, 0.0,
+     0.0, 0.0, 0.0, 0.0, 0.0},
+
+    {0.0, 0.0, 1.0, 0.0, 0.0,
+     0.0, 1.0, 1.0, 1.0, 0.0,
+     1.0, 1.0, 1.0, 1.0, 1.0,
+     0.0, 1.0, 1.0, 1.0, 0.0,
+     0.0, 0.0, 1.0, 0.0, 0.0},
+
+    {0.0, 1.0, 1.0, 1.0, 0.0,
+     1.0, 1.0, 1.0, 1.0, 1.0,
+     1.0, 1.0, 1.0, 1.0, 1.0,
+     1.0, 1.0, 1.0, 1.0, 1.0,
+     0.0, 1.0, 1.0, 1.0, 0.0},
+
+    {1.0, 1.0, 1.0, 1.0, 1.0,
+     1.0, 1.0, 1.0, 1.0, 1.0,
+     1.0, 1.0, 1.0, 1.0, 1.0,
+     1.0, 1.0, 1.0, 1.0, 1.0,
+     1.0, 1.0, 1.0, 1.0, 1.0},
+
+    {0.0, 1.0, 1.0, 1.0, 0.0,
+     1.0, 1.0, 1.0, 1.0, 1.0,
+     0.0, 1.0, 1.0, 1.0, 0.0,
+     0.0, 1.0, 1.0, 1.0, 0.0,
+     0.0, 0.0, 1.0, 0.0, 0.0}
+};
 
 
 double desenho_foguete[5][NUM_PIXELS] = {
@@ -244,6 +280,45 @@ void desenho_pio_estrela(double desenho_estrela[5][NUM_PIXELS], uint32_t valor_l
     }
 }
 
+// Função para fazer a animação da explosão - wellington
+void desenho_pio_explosao(double desenho_explosao[5][NUM_PIXELS], uint32_t valor_led, PIO pio, uint sm) {
+    // Definindo as cores: Vermelho, Verde e Azul
+    double cores[3][3] = {
+        {1.0, 0.0, 0.0}, // Vermelho
+        {0.0, 1.0, 0.0}, // Verde
+        {0.0, 0.0, 1.0}  // Azul
+    };
+
+    // Apagar todos os LEDs antes de iniciar a animação
+    for (int i = 0; i < NUM_PIXELS; i++) {
+        valor_led = matrix_rgb(0.0, 0.0, 0.0); // Todos os LEDs apagados
+        pio_sm_put_blocking(pio, sm, valor_led);
+    }
+    sleep_ms(500); // Pausa para mostrar que os LEDs estão apagados
+     // Tocar o buzzer com um som grave por 1 segundo
+
+    play_tone(200, 1000);  // Toca um tom de 200 Hz por 1000 ms
+    // Loop para cada frame da explosão
+    for (int frame = 0; frame < 5; frame++) {
+        // Alterna entre as cores
+        for (int cor = 0; cor < 3; cor++) {
+            for (int i = 0; i < NUM_PIXELS; i++) {
+                // Define a cor do LED com base no frame e na cor atual
+                valor_led = matrix_rgb(desenho_explosao[frame][i] * cores[cor][0], 
+                                       desenho_explosao[frame][i] * cores[cor][1], 
+                                       desenho_explosao[frame][i] * cores[cor][2]);
+                pio_sm_put_blocking(pio, sm, valor_led);
+            }
+            sleep_ms(200);  // Pausa para criar o efeito de animação
+        }
+    }
+
+    // Apagar todos os LEDs após a animação
+    for (int i = 0; i < NUM_PIXELS; i++) {
+        valor_led = matrix_rgb(0.0, 0.0, 0.0); // Todos os LEDs apagados
+        pio_sm_put_blocking(pio, sm, valor_led);
+    }
+}
 
 uint8_t columns[4] = {1, 2, 3, 4};
 uint8_t rows[4] = {5, 6, 7, 8};
@@ -376,7 +451,7 @@ int main()
                 break;
 
             case '7':
-
+                desenho_pio_explosao(desenho_explosao, valor_led, pio, sm);
                 break;
 
             case '8':
