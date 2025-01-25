@@ -394,55 +394,6 @@ void animacao_pio_maca(double frames_maca[7][NUM_PIXELS], uint32_t valor_led, PI
     }
 }
 
-// Desenho para o número 9 (carinha piscando com mais detalhes)
-double desenho_nove[5][NUM_PIXELS] = {
-{0.0, 0.0, 1.0, 0.0, 0.0,
- 0.0, 1.0, 0.0, 1.0, 0.0,  // Olhos abertos
- 0.0, 0.0, 1.0, 0.0, 0.0,
- 0.0, 1.0, 0.0, 1.0, 0.0,
- 1.0, 0.0, 0.0, 0.0, 1.0},
-
-{0.0, 0.0, 1.0, 0.0, 0.0,
- 0.0, 1.0, 0.0, 1.0, 0.0, // Olhos semicerrados
- 0.0, 0.0, 0.0, 0.0, 0.0,
- 0.0, 1.0, 0.0, 1.0, 0.0,
- 1.0, 0.0, 0.0, 0.0, 1.0},
-
-{0.0, 0.0, 1.0, 0.0, 0.0,
- 0.0, 0.0, 0.0, 0.0, 0.0, // Olhos fechados
- 0.0, 0.0, 1.0, 0.0, 0.0,
- 0.0, 1.0, 0.0, 1.0, 0.0,
- 1.0, 0.0, 0.0, 0.0, 1.0},
-
-{0.0, 0.0, 1.0, 0.0, 0.0,
- 0.0, 1.0, 0.0, 1.0, 0.0, // Olhos semicerrados
- 0.0, 0.0, 0.0, 0.0, 0.0,
- 0.0, 1.0, 0.0, 1.0, 0.0,
- 1.0, 0.0, 0.0, 0.0, 1.0},
-
-{0.0, 0.0, 1.0, 0.0, 0.0,
- 0.0, 1.0, 0.0, 1.0, 0.0,  // Olhos abertos
- 0.0, 0.0, 1.0, 0.0, 0.0,
- 0.0, 1.0, 0.0, 1.0, 0.0,
- 1.0, 0.0, 0.0, 0.0, 1.0}
-
-}; 
-
-//função desenho_nove com 5 frames
-void desenho_pio_nove(double desenho_nove[5][NUM_PIXELS], uint32_t valor_led, PIO pio, uint sm, double r, double g, double b) {
-    for (int frame = 0; frame < 5; frame++){
-        for (int i = 0; i < NUM_PIXELS; i++) {
-            valor_led = matrix_rgb(desenho_nove[frame][i]*b, desenho_nove[frame][i] *r, desenho_nove[frame][i]*g);
-            pio_sm_put_blocking(pio, sm, valor_led);
-        }
-        sleep_ms(200);
-    }
-
-    // Apaga os LEDs após a animação
-    for (int i = 0; i < NUM_PIXELS; i++) {
-        pio_sm_put_blocking(pio, sm, matrix_rgb(0, 0, 0)); // Cor preta (todos os LEDs apagados)
-    }
-}
 
 uint8_t columns[4] = {1, 2, 3, 4};
 uint8_t rows[4] = {5, 6, 7, 8};
@@ -583,8 +534,7 @@ int main()
                 break;
 
             case '9':
-                    desenho_pio_nove(desenho_nove, valor_led, pio, sm, 1.0, 1.0, 0.0 ); // Amarelo
-                break;
+            
 
             case '#':
                 desenho_pio(desenho_hashtag, valor_led, pio, sm, 1.0, 1.0, 1.0);
