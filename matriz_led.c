@@ -194,6 +194,39 @@ double frames_maca[7][NUM_PIXELS] = {
     0.0, 0.0, 0.0, 0.0, 0.0
     }
 };
+// Desenho para o número 9 (carinha piscando)
+double desenho_nove[5][NUM_PIXELS] = {
+{0.0, 0.0, 1.0, 0.0, 0.0,
+ 0.0, 1.0, 0.0, 1.0, 0.0,  // Olhos abertos
+ 0.0, 0.0, 1.0, 0.0, 0.0,
+ 0.0, 1.0, 0.0, 1.0, 0.0,
+ 1.0, 0.0, 0.0, 0.0, 1.0},
+
+{0.0, 0.0, 1.0, 0.0, 0.0,
+ 0.0, 1.0, 0.0, 1.0, 0.0, // Olhos semicerrados
+ 0.0, 0.0, 0.0, 0.0, 0.0,
+ 0.0, 1.0, 0.0, 1.0, 0.0,
+ 1.0, 0.0, 0.0, 0.0, 1.0},
+
+{0.0, 0.0, 1.0, 0.0, 0.0,
+ 0.0, 0.0, 0.0, 0.0, 0.0, // Olhos fechados
+ 0.0, 0.0, 1.0, 0.0, 0.0,
+ 0.0, 1.0, 0.0, 1.0, 0.0,
+ 1.0, 0.0, 0.0, 0.0, 1.0},
+
+{0.0, 0.0, 1.0, 0.0, 0.0,
+ 0.0, 1.0, 0.0, 1.0, 0.0, // Olhos semicerrados
+ 0.0, 0.0, 0.0, 0.0, 0.0,
+ 0.0, 1.0, 0.0, 1.0, 0.0,
+ 1.0, 0.0, 0.0, 0.0, 1.0},
+
+{0.0, 0.0, 1.0, 0.0, 0.0,
+ 0.0, 1.0, 0.0, 1.0, 0.0,  // Olhos abertos
+ 0.0, 0.0, 1.0, 0.0, 0.0,
+ 0.0, 1.0, 0.0, 1.0, 0.0,
+ 1.0, 0.0, 0.0, 0.0, 1.0}
+
+};
 
 // imprimir valor binário
 void imprimir_binario(int num)
@@ -460,6 +493,21 @@ void play_tone(uint16_t frequencia, uint16_t duracao)
     }
 }
 
+void desenho_pio_nove(double desenho_nove[5][NUM_PIXELS], uint32_t valor_led, PIO pio, uint sm, double r, double g, double b) {
+    for (int frame = 0; frame < 5; frame++){
+        for (int i = 0; i < NUM_PIXELS; i++) {
+            valor_led = matrix_rgb(desenho_nove[frame][i]*b, desenho_nove[frame][i] *r, desenho_nove[frame][i]*g);
+            pio_sm_put_blocking(pio, sm, valor_led);
+        }
+        sleep_ms(200);
+    }
+
+    // Apaga os LEDs após a animação
+    for (int i = 0; i < NUM_PIXELS; i++) {
+        pio_sm_put_blocking(pio, sm, matrix_rgb(0, 0, 0)); // Cor preta (todos os LEDs apagados)
+    }
+}
+
 int main()
 {
     stdio_init_all();
@@ -534,7 +582,8 @@ int main()
                 break;
 
             case '9':
-            
+                desenho_pio_nove(desenho_nove, valor_led, pio, sm, 1.0, 1.0, 0.0 ); // Amarelo
+                break;
 
             case '#':
                 desenho_pio(desenho_hashtag, valor_led, pio, sm, 1.0, 1.0, 1.0);
