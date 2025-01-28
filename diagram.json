@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "author": "Anonymous maker",
+  "author": "Haniel Taynã",
   "editor": "wokwi",
   "parts": [
     {
@@ -151,7 +151,8 @@
     [ "keypad1:R2", "pico:GP6", "green", [ "v0" ] ],
     [ "keypad1:R1", "pico:GP5", "green", [ "v0" ] ],
     [ "bz1:2", "pico:GP21", "red", [ "v0" ] ],
-    [ "bz1:1", "pico:GND.6", "black", [ "v0" ] ]
+    [ "bz1:1", "pico:GND.6", "black", [ "v0" ] ],
+    [ "pico:GND.4", "gnd1:GND", "black", [ "h-336", "v0.04" ] ]
   ],
   "dependencies": {}
 }
